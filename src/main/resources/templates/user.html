@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UserPage</title>
+</head>
+<body>
+<!--    <a th:href="@{/user/{id}(id=${people.getId()})}" th:text="${people.getId()}"></a>-->
+<h2>Добро пожаловать на личную станицу пользователя</h2>
+<br>
+<h3>Username - <a th:text="${people.getUsername()}" ></a></h3>
+<h3>LastName - <a th:text="${people.getLastName()}" ></a></h3>
+<h3>Age - <a th:text="${people.getAge()}"></a></h3>
+<h3>Role -  <a th:text="${people.getRoles()}"></a></h3>
+<br>
+<a href="/logout">Logout</a>
+
+<!--    <a th:href="@{/user/{id}/edit(id=${us.getId()})}"><input type="submit" value="Uptate" /></a>-->
+<!--    <a th:href="@{/user/delete/{id}(id=${us.getId()})}"><input type="submit" value="Delete" /></a>-->
+</body>
+</html>

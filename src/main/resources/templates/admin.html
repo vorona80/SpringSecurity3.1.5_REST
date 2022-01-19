@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Странрца администратора</h2>
+<br>
+<div th:switch="${user}">
+    <h2 th:case="null">No user found</h2>
+    <div th:case="*">
+        <h2>USER</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Password</th>
+                <th>Role</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="us : ${user}">
+                <td th:href="@{/admin/{id}(id=${us.getId()})}" th:text="${us.getId()}"></td>
+                <td th:text="${us.getUsername()}"    ></td>
+                <td th:text="${us.getLastName()}" ></td>
+                <td th:text="${us.getAge()}"></td>
+                <td th:text="${us.getPassword()}"></td>
+                <td th:text="${us.getRoles()}"></td>
+                <!--    <a th:text="${us.getAge()}"     ></a>-->
+                <td><a th:href="@{/admin/{id}/edit(id=${us.getId()})}"><input type="submit" value="Uptate" /></a></td>
+                <td><a th:href="@{/admin/delete/{id}(id=${us.getId()})}"><input type="submit" value="Delete" /></a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!--    <a th:href="@{/user/{id}(id=${us.getId()})}" th:text="${us.getId()}"></a>-->
+        <!--    <a th:text="${us.getName()}"    ></a>-->
+        <!--    <a th:text="${us.getSurname()}" ></a>-->
+        <!--    <a th:text="${us.getAge()}"></a>-->
+        <!--    <a th:href="@{/user/{id}/edit(id=${us.getId()})}"><input type="submit" value="Uptate" /></a>-->
+        <!--    <a th:href="@{/user/delete/{id}(id=${us.getId()})}"><input type="submit" value="Delete" /></a>-->
+
+
+        <!--    <form th:method="delete" th:action="@{/user/{id}(id=${us.getId()})}">-->
+        <!--        <input type="submit" value="Delete"/>-->
+        <!--    </form>-->
+
+    </div>
+    <div>
+        <form th:action="@{/admin/new}" th:object="${user}">
+            <input type="submit" value="Add new person!"/>
+        </form>
+        <br>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+</body>
+</html>
