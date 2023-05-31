@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.model;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -22,25 +24,24 @@ public class User implements UserDetails {
     private Long id;
     @Column(name = "username", unique = true)
     @NotEmpty(message = "Вы ничего не ввели")
-    @Size(min = 3, max = 20,message = "Имя должно быть в диапазоне от 2 до 20 символов")
+    @Size(min = 3, max = 20, message = "Имя должно быть в диапазоне от 2 до 20 символов")
     private String username;
     @Column(name = "lastName")
     @NotEmpty(message = "Вы ничего не ввели")
-    @Size(min = 3, max = 20,message = "Имя должно быть в диапазоне от 2 до 20 символов")
+    @Size(min = 3, max = 20, message = "Имя должно быть в диапазоне от 2 до 20 символов")
     private String lastName;
-    @Min(value = 0,message = "Возраст должен быть больш нуля")
+    @Min(value = 0, message = "Возраст должен быть больш нуля")
     @Column(name = "age")
     private Integer age;
     @Column(name = "password")
     @NotEmpty(message = "Вы ничего не ввели")
-    @Size(min = 3, max = 225,message = "Имя должно быть в диапазоне от 2 до 225 символов")
+    @Size(min = 3, max = 225, message = "Имя должно быть в диапазоне от 2 до 225 символов")
     private String password;
 
-    @ManyToMany(cascade=CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-
 
     private Set<Role> roles = new HashSet<>();
 
@@ -138,15 +139,27 @@ public class User implements UserDetails {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(getId(), user.getId()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getAge(), user.getAge()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getRoles(), user.getRoles());
+        return Objects.equals(getId(), user.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getLastName(), getAge(), getPassword(), getRoles());
+        return Objects.hash(getId());
     }
 }

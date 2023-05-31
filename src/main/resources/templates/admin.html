@@ -26,29 +26,17 @@
             <tbody>
             <tr th:each="us : ${user}">
                 <td th:href="@{/admin/{id}(id=${us.getId()})}" th:text="${us.getId()}"></td>
-                <td th:text="${us.getUsername()}"    ></td>
-                <td th:text="${us.getLastName()}" ></td>
+                <td th:text="${us.getUsername()}"></td>
+                <td th:text="${us.getLastName()}"></td>
                 <td th:text="${us.getAge()}"></td>
                 <td th:text="${us.getPassword()}"></td>
                 <td th:text="${us.getRoles()}"></td>
                 <!--    <a th:text="${us.getAge()}"     ></a>-->
-                <td><a th:href="@{/admin/{id}/edit(id=${us.getId()})}"><input type="submit" value="Uptate" /></a></td>
-                <td><a th:href="@{/admin/delete/{id}(id=${us.getId()})}"><input type="submit" value="Delete" /></a></td>
+                <td><a th:href="@{/admin/{id}/edit(id=${us.getId()})}"><input type="submit" value="Uptate"/></a></td>
+                <td><a th:href="@{/admin/delete/{id}(id=${us.getId()})}"><input type="submit" value="Delete"/></a></td>
             </tr>
             </tbody>
         </table>
-
-        <!--    <a th:href="@{/user/{id}(id=${us.getId()})}" th:text="${us.getId()}"></a>-->
-        <!--    <a th:text="${us.getName()}"    ></a>-->
-        <!--    <a th:text="${us.getSurname()}" ></a>-->
-        <!--    <a th:text="${us.getAge()}"></a>-->
-        <!--    <a th:href="@{/user/{id}/edit(id=${us.getId()})}"><input type="submit" value="Uptate" /></a>-->
-        <!--    <a th:href="@{/user/delete/{id}(id=${us.getId()})}"><input type="submit" value="Delete" /></a>-->
-
-
-        <!--    <form th:method="delete" th:action="@{/user/{id}(id=${us.getId()})}">-->
-        <!--        <input type="submit" value="Delete"/>-->
-        <!--    </form>-->
 
     </div>
     <div>

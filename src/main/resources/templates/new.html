@@ -8,22 +8,30 @@
 <body>
 <!--форма ля создания человека первый атрибут метод, второй атрибут эктион-->
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
-    <label for="username">Enter username:      </label>
-    <input type="text" th:field="*{username}"id = "username">
+    <label for="username">Enter username: </label>
+    <input type="text" th:field="*{username}" id="username">
     <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>
     <br/>
     <label for="lastName">Enter lastName:</label>
-    <input type="text" th:field="*{lastName}"id = "lastName">
+    <input type="text" th:field="*{lastName}" id="lastName">
     <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Lastname error</div>
     <br/>
-    <label for="age">Enter age:        </label>
-    <input type="text" th:field="*{age}"id = "age">
+    <label for="age">Enter age: </label>
+    <input type="text" th:field="*{age}" id="age">
     <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
     <br/>
-    <label for="password">Enter password:        </label>
-    <input type="text" th:field="*{password}"id = "password">
+    <label for="password">Enter password: </label>
+    <input type="text" th:field="*{password}" id="password">
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
     <br/>
+
+    <label for="roles">Roles:</label>
+    <br>
+    <select multiple name="roles" id="roles">
+        <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getRole()}"></option>
+    </select>
+    <br>
+
     <input type="submit" value="Create!"/>
 </form>
 <br>

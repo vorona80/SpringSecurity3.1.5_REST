@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    public String returnUser(Principal principal, Model model) {
+    public String getUser(Principal principal, Model model) {
         model.addAttribute("people", userServiceImpl.findByUsername(principal.getName()));
         return "user";
     }
@@ -37,26 +37,5 @@ public class UserController {
 
 
 
-
-
-
-
-
-
-
-//    @GetMapping("/")
-//    public String homePage () {
-//        return "HOME";
-//    }
-//    @GetMapping("/authentificated")
-//    public String pageAuthentificated(Principal principal){
-//        return "защищенная область: " + principal.getName();
-//    }
-//    @GetMapping("/user")
-//    public String pageAdmin(Principal principal){
-//        User user = userServiceInpl.findByUsername(principal.getName());
-//        return "HELLO PAGE USER " + user.getUsername() + " " + user.getLastName() + " " +
-//                user.getAge() + "role: " + user.getRoles();
-//    }
 
 
