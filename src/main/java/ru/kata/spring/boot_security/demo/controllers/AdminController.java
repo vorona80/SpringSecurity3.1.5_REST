@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.service.RegistrationUser;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -18,13 +17,11 @@ import ru.kata.spring.boot_security.demo.model.User;
 public class AdminController {
 
     private UserServiceImpl userServiceImpl;
-    private RegistrationUser registrationUser;
     private RoleServiceImpl roleService;
 
     @Autowired
-    public AdminController(UserServiceImpl userServiceImpl, RegistrationUser registrationUser, RoleServiceImpl roleService) {
+    public AdminController(UserServiceImpl userServiceImpl, RoleServiceImpl roleService) {
         this.userServiceImpl = userServiceImpl;
-        this.registrationUser = registrationUser;
         this.roleService = roleService;
     }
 
@@ -45,7 +42,7 @@ public class AdminController {
     public String saveUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "new";
-        registrationUser.createUser(user);
+        userServiceImpl.createUser(user);
         return "redirect:/admin";
     }
 
@@ -56,7 +53,7 @@ public class AdminController {
         return "edit";
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping("/{id}")
     public String saveUpdateUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult, @PathVariable("id") Long id) {
         if (bindingResult.hasErrors())
             return "edit";

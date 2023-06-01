@@ -38,6 +38,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.getById(id);
     }
 
+    public void createUser(User user) {
+        String encoderPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encoderPassword);
+        userRepository.save(user);
+    }
+
     @Override
     public void update(Long id, User updateUser) {
         updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));

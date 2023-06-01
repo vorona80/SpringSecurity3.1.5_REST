@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +15,7 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "role")
+    @NotEmpty(message = "Вы ничего не ввели")
     private String role;
 
     public Role() {

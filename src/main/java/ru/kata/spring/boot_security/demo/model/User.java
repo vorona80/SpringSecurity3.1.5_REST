@@ -38,11 +38,12 @@ public class User implements UserDetails {
     @Size(min = 3, max = 225, message = "Имя должно быть в диапазоне от 2 до 225 символов")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    @ManyToMany/*(cascade = CascadeType.ALL)*/
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-
+    @NotEmpty(message = "Вы ничего не ввели")
     private Set<Role> roles = new HashSet<>();
 
     public User() {

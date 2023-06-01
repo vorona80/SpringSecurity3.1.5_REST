@@ -7,6 +7,7 @@
 </head>
 <body>
 <h2>Странрца администратора</h2>
+<a th:href="@{/user}"><input type="submit" value="User"/></a>
 <br>
 <div th:switch="${user}">
     <h2 th:case="null">No user found</h2>

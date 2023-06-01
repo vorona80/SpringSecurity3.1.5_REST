@@ -29,6 +29,7 @@
     <br>
     <select multiple name="roles" id="roles">
         <option th:each="role : ${roles}" th:value="${role.getId()}" th:text="${role.getRole()}"></option>
+        <br>
     </select>
     <br>
 
