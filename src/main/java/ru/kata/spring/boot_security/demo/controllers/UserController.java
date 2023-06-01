@@ -11,7 +11,6 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/user")
-//@RestController
 public class UserController {
     private final UserServiceImpl userServiceImpl;
 

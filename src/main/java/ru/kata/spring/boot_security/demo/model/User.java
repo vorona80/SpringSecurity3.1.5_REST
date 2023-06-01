@@ -39,7 +39,7 @@ public class User implements UserDetails {
     private String password;
 
     @Fetch(FetchMode.JOIN)
-    @ManyToMany/*(cascade = CascadeType.ALL)*/
+    @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

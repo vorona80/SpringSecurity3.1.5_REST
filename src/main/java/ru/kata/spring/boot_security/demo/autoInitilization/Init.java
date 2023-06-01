@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.autoInitilization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -14,8 +15,7 @@ import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Set;
 
-@Configuration
-//@Transactional
+@Component
 public class Init {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
