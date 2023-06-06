@@ -8,7 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
     @Column(name = "id")
@@ -22,6 +22,10 @@ public class Role implements GrantedAuthority {
     }
 
     public Role(String role) {
+        this.role = role;
+    }
+    public Role(Long id, String role) {
+        this.id = id;
         this.role = role;
     }
 

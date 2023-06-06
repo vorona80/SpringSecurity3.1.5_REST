@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.ExceptionHandler.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
@@ -35,9 +36,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public User getUser(Long id) {
-        return userRepository.getById(id);
+        try {
+            User user = userRepository.findById(id).orElseThrow();
+            return user;
+        } catch (Exception e) {
+            throw new NoSuchUserException("There is no user with ID = " + id + " int Database");
+        }
     }
-
+    @Override
     public void createUser(User user) {
         String encoderPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encoderPassword);
@@ -45,9 +51,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void update(Long id, User updateUser) {
-        updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
-        userRepository.save(updateUser);
+    public void update(User updateUser) {
+        User userOld =userRepository.findById(updateUser.getId()).get();
+        String passwordOld = userOld.getPassword();
+        if(updateUser.getPassword() == null || updateUser.getPassword().isEmpty()) {
+updateUser.setPassword(passwordOld);
+        } else{
+            updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        }
+userRepository.save(updateUser);
+//        if(updateUser.getRoles().isEmpty()) {
+//            updateUser.setRoles(userRepository.findById(id).get().getRoles());
+//        } else {
+//            updateUser.setRoles(updateUser.getRoles());
+//        }
+//        if(updateUser.getPassword().isEmpty()) {
+//            updateUser.setPassword(userRepository.findById(id).get().getPassword());
+//        } else{
+//            updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+//        }
+//
+//        userRepository.save(updateUser);
     }
 
     @Override
@@ -67,8 +91,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not Found");
         }
-
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                user.getRoles());
+        return user;
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+//                user.getRoles());
     }
 }
