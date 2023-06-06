@@ -11,6 +11,8 @@ import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 import ru.kata.spring.boot_security.demo.model.User;
 
+import java.security.Principal;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -26,37 +28,29 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String getAllUsers(Model model) {
+    public String getAllUsers(Principal principal, Model model, @ModelAttribute("newUser") User newUser) {
         model.addAttribute("user", userServiceImpl.getAllUsers());
+        model.addAttribute("username", userServiceImpl.findByUsername(principal.getName()));
+        model.addAttribute("roles", roleService.getAllRoles());
         return "admin";
     }
 
     @GetMapping("/new")
-    public String getNewUser(Model model) {
+    public String getNewUser(Principal principal, Model model) {
         model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("user", new User());
+        model.addAttribute("username", userServiceImpl.findByUsername(principal.getName()));
         return "new";
     }
 
     @PostMapping
     public String saveUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            return "new";
         userServiceImpl.createUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/{id}/edit")
-    public String getUserById(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", userServiceImpl.getUser(id));
-        return "edit";
-    }
-
     @PostMapping("/{id}")
     public String saveUpdateUser(@ModelAttribute("user") @Validated User user, BindingResult bindingResult, @PathVariable("id") Long id) {
-        if (bindingResult.hasErrors())
-            return "edit";
         userServiceImpl.update(id, user);
         return "redirect:/admin";
     }

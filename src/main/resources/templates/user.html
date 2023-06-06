@@ -1,18 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>UserPage</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+
 </head>
 <body>
-<h2>Добро пожаловать на личную станицу пользователя</h2>
-<br>
-<h3>Username - <a th:text="${people.getUsername()}"></a></h3>
-<h3>LastName - <a th:text="${people.getLastName()}"></a></h3>
-<h3>Age - <a th:text="${people.getAge()}"></a></h3>
-<h3>Role - <a th:text="${people.getRoles()}"></a></h3>
-<br>
-<a href="/logout">Logout</a>
 
+<header>
+    <nav class="navbar navbar-dark bg-dark">
+        <span class="navbar-brand">
+       <span class="text-white font-weight-bold"> <a th:text="${people.getUsername()}"></ath:text></a></span>
+       <span class="text-white">with role: </span>
+            <span class="text-white"
+                  th:each="role : ${people.getRoles()}"
+                  th:text="${role.role.substring(5)} + ' '"></span>
+  </span>
+        <ul class="navbar-nav mr-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 p-0 mt-2 ">
+            <table class="table">
+                </thead>
+                <tbody>
+                <tr class="table-primary table-hove">
+                    <div class="col-md-0">
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <li th:each="role : ${people.getRoles()}"
+                                th:if="${role.role.contains('ROLE_ADMIN')}" class="nav-item">
+                                <a th:href="@{/admin}" class="nav-link"
+                                   aria-current="page">Admin</a>
+                            </li>
+                            <li><a th:href="@{/user}" class="nav-link active">User</a>
+                            </li>
+                        </ul>
+                    </div>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-10 bg-light vh-100">
+            <div class="mt-2">
+                <h2>User information-page</h2>
+            </div>
+
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="table table-responsive card">
+
+                        <div class="col-50 ">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>About user</h5>
+                                </div>
+
+                                <div class="card-body">
+                                    <table class="table table-striped ">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Username</th>
+                                            <th>Lastname</th>
+                                            <th>Age</th>
+                                            <th>Role</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><a th:text="${people.getId()}"></a></td>
+                                            <td><a th:text="${people.getUsername()}"></a></td>
+                                            <td><a th:text="${people.getLastName()}"></a></td>
+                                            <td><a th:text="${people.getAge()}"></a></td>
+                                            <td><a th:each="role : ${people.getRoles()}"
+                                                   th:text="${role.role.substring(5) + ' '}"></a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>
