@@ -52,6 +52,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void update(User updateUser) {
+        if(updateUser.getRoles().isEmpty()) {
+            updateUser.setRoles(userRepository.findById(updateUser.getId()).get().getRoles());
+        } else {
+            updateUser.setRoles(updateUser.getRoles());
+        }
         User userOld =userRepository.findById(updateUser.getId()).get();
         String passwordOld = userOld.getPassword();
         if(updateUser.getPassword() == null || updateUser.getPassword().isEmpty()) {
@@ -60,18 +65,6 @@ updateUser.setPassword(passwordOld);
             updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         }
 userRepository.save(updateUser);
-//        if(updateUser.getRoles().isEmpty()) {
-//            updateUser.setRoles(userRepository.findById(id).get().getRoles());
-//        } else {
-//            updateUser.setRoles(updateUser.getRoles());
-//        }
-//        if(updateUser.getPassword().isEmpty()) {
-//            updateUser.setPassword(userRepository.findById(id).get().getPassword());
-//        } else{
-//            updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
-//        }
-//
-//        userRepository.save(updateUser);
     }
 
     @Override
@@ -92,7 +85,5 @@ userRepository.save(updateUser);
             throw new UsernameNotFoundException("User not Found");
         }
         return user;
-//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-//                user.getRoles());
     }
 }

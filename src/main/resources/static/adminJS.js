@@ -1,5 +1,6 @@
 const url = 'http://localhost:8080/api/admin';
 
+
 function getAllUsers() {
     fetch(url)
         .then(res => res.json())
@@ -14,6 +15,7 @@ function getAdminPage() {
 
 function loadTable(listAllUsers) {
     let res = '';
+
     for (let user of listAllUsers) {
         res +=
             `<tr>
@@ -32,6 +34,7 @@ function loadTable(listAllUsers) {
                     onclick="deleteModal(${user.id})">Delete</button></td>
             </tr>`
     }
+
     document.getElementById('adminTable').innerHTML = res;
 }
 
@@ -40,8 +43,9 @@ getAdminPage();
 
 // Добавление пользователя
 document.getElementById('newUserForm').addEventListener('submit',(e) => {
-e.preventDefault()
-let  role =document.getElementById('newRoles')
+    e.preventDefault()
+    // e.target.reset();
+    let  role =document.getElementById('newRoles')
     let rolesAddUser = []
     let rolesAddUserValue = ''
     for(let i = 0; i < role.options.length; i++) {
@@ -64,22 +68,18 @@ let  role =document.getElementById('newRoles')
         })
     })
         .then((response) => {
-if(response.ok) {
-    getAllUsers()
-    document.getElementById("userTableClick").click()
-}
+            if(response.ok) {
+                getAllUsers()
+                document.getElementById("userTableClick").click()
+            }
         })
 })
 
 
 // Закрытие модального окна
 function closeModal() {
-    // document.getElementById("editClose").click()
     document.querySelectorAll(".btn-close").forEach((btn) => btn.click())
 }
-
-
-
 
 //Редактирование пользователя
 function editModal(id) {
@@ -95,12 +95,11 @@ function editModal(id) {
             document.getElementById('editUsername').value = u.username;
             document.getElementById('editLastName').value = u.lastName;
             document.getElementById('editAge').value = u.age;
-            document.getElementById('editPassword').value = "****";
+            document.getElementById('editPassword').value = "";
             console.log(res)
         })
     });
 }
-
 
 async function editUser() {
     const form_ed = document.getElementById('modalEdit');
@@ -123,7 +122,7 @@ async function editUser() {
         lastName: lastNameValue,
         age: ageValue,
         password: passwordValue,
-        role: listOfRole
+        roles: listOfRole
     }
     await fetch(url + '/' + user.id, {
         method: "PATCH",
@@ -132,16 +131,12 @@ async function editUser() {
             'Content-Type': 'application/json;charset=UTF-8'
         },
         body: JSON.stringify({
-            id: idValue,
-            username: usernameValue,
-            lastName: lastNameValue,
-            age: ageValue,
-            password: passwordValue,
-            role: listOfRole
+            user
         })
 
     });
     closeModal()
+    getUserPage()
     getAllUsers()
 }
 
@@ -159,7 +154,7 @@ function deleteModal(id) {
             document.getElementById('usernameDelete').value = u.username;
             document.getElementById('lastNameDelete').value = u.lastName;
             document.getElementById('ageDelete').value = u.age;
-            document.getElementById('roleDelete').value = u.roles.map(r => r.role).join(", ");
+            document.getElementById('roleDelete').value = u.roles.map(r => r.role.substring(5)).join(" ");
         })
     });
 }

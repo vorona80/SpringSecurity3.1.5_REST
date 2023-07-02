@@ -1,26 +1,32 @@
-// const userUrl = 'http://localhost:8080/api/currentUser';
-//
-//
-// function getUserPage() {
-//     fetch(userUrl).then(response => response.json()).then(user =>
-//         getInformationAboutUser(user))
-// }
-//
-// function getInformationAboutUser(user) {
-//
-//     let result = '';
-//     result =
-//         `<tr>
-//      <td>${user.id}</td>
-//                      <td>${user.username}</td>
-//                      <td>${user.lastName}</td>
-//                      <td>${user.age}</td>
-//                      <td>${user.roles.map(role => role.role.substring(5))}</td>
-// </tr>`
-//     document.getElementById('userTableBody').innerHTML = result;
-// }
-//
-// getUserPage();
+const userUrl = 'http://localhost:8080/api/user';
+
+fetch('http://localhost:8080/api/user')
+    .then(responce => responce.json())
+    .then(user => {
+        document.getElementById("headerUsername").innerHTML = user.username.toUpperCase()
+        document.getElementById("headerRole").innerHTML = user.roles.map(role => role.role.substring(5)).join(' ')
+    })
+function getUserPage() {
+    fetch(userUrl).then(response => response.json()).then(user =>
+        getInformationAboutUser(user))
+}
+
+function getInformationAboutUser(user) {
+    // $('#headerUsername').append(user.username.toUpperCase());
+    // $('#headerRole').append(user.roles.map(role => role.role.substring(5) + " "));
+    let result = '';
+    result =
+        `<tr>
+     <td>${user.id}</td>
+                     <td>${user.username}</td>
+                     <td>${user.lastName}</td>
+                     <td>${user.age}</td>
+                     <td>${user.roles.map(role => role.role.substring(5)).join(' ')}</td>
+</tr>`
+    document.getElementById('userTableBody').innerHTML = result;
+}
+
+getUserPage();
 
 
 
