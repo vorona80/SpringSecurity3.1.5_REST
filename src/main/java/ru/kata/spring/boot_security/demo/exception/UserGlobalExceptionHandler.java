@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.ExceptionHandler;
+package ru.kata.spring.boot_security.demo.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

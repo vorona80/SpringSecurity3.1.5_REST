@@ -130,9 +130,9 @@ async function editUser() {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8'
         },
-        body: JSON.stringify({
+        body: JSON.stringify(
             user
-        })
+        )
 
     });
     closeModal()
